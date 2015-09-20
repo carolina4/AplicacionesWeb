@@ -59,26 +59,31 @@ public class SolicitudHttp {
                 switch (accion) {
                     case "GET":
                         System.out.println("Realizando un GET");
-                        GET(out, contenidoSolicitud, mimeType);
+                        out.write(respuestaHttp(200, "OK", mimeType, contenidoSolicitud, true));
                         break;
 
                     case "HEAD":
                         System.out.println("Realizando un HEAD");
-                        HEAD(out, contenidoSolicitud, mimeType);
+                        out.write(respuestaHttp(200, "OK", mimeType, contenidoSolicitud, false));
                         break;
 
                     case "POST":
                         System.out.println("Realizando un POST");
+                        // FALTA
                         break;
+                    default:
+                        // El servidor no entiende la solicitud, ocurre un error 400
+                        contenidoSolicitud = "<html><body>Error 400: Bad Request.</body></html>";
+                        out.write(respuestaHttp(400, "Bad Request", "text/html", contenidoSolicitud, true));
                 }
             } else {
                 // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
-                contenidoSolicitud = "<html><body>406: Not Acceptable.</body></html>";
+                contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
                 out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
             }
         } else {
             // El archivo no existe, ocurre un error 404
-            contenidoSolicitud = "<html><body>404: Not Found.</body></html>";
+            contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
             out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
         }           
         
@@ -86,16 +91,6 @@ public class SolicitudHttp {
         in.close();
         clienteVisitante.close();
         
-    }
-    
-    private void GET (BufferedWriter out, String contenido, String mimeType) throws IOException {
-        String respuesta = respuestaHttp(200, "OK", mimeType, contenido, true);      
-        out.write(respuesta);
-    }
-    
-    private void HEAD (BufferedWriter out, String contenido, String mimeType) throws IOException {
-        String respuesta = respuestaHttp(200, "OK", mimeType, contenido, false);    
-        out.write(respuesta);
     }
     
     // Devuelve un String con una respuesta HTTP
