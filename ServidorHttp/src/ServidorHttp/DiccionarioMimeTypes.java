@@ -13,14 +13,17 @@ public class DiccionarioMimeTypes {
         mapa = new MimetypesFileTypeMap();
         
         mapa.addMimeTypes("application/xhtml+xml xhtml");
-        mapa.addMimeTypes("application/x-php php PHP");
+        mapa.addMimeTypes("text/html php PHP");
         mapa.addMimeTypes("application/pdf pdf PDF");
         mapa.addMimeTypes("image/x-ico ico ICO");
-        mapa.addMimeTypes("application/javascript js JS");
+        mapa.addMimeTypes("text/javascript js JS");
         mapa.addMimeTypes("application/json json JSON");
         mapa.addMimeTypes("application/xml xml XML");
         mapa.addMimeTypes("application/zip zip ZIP");
         mapa.addMimeTypes("image/png png PNG");
+        mapa.addMimeTypes("image/svg svg SVG");
+        mapa.addMimeTypes("text/css css CSS");
+        mapa.addMimeTypes("text/html asp ASP");
     }
     
     public String obtenerMimeType(String nombreArchivo) {

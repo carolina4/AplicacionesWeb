@@ -21,8 +21,7 @@ public class SolicitudHttp {
         BufferedReader in = new BufferedReader(new InputStreamReader(clienteVisitante.getInputStream()));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clienteVisitante.getOutputStream()));
          
-        String[] solicitud = archivoAArreglo(in);
-        
+        String[] solicitud = archivoAArreglo(in); 
         // Para que el programa no prouzca errores con solicitudes vacias
         if (solicitud.length == 0) {
             return;
@@ -39,53 +38,48 @@ public class SolicitudHttp {
             archivo = "index.html";
         }
         
-        // Contenido de la respuesta a la solicitud
-        String contenido;
+        String contenidoSolicitud = "";
         
         FileInputStream fin;
         boolean archivoExiste = true;
         try {
             fin = new FileInputStream(archivo);
-            contenido = archivoAString(fin);
+            contenidoSolicitud = archivoAString(fin);
             fin.close();
-        }
-        catch(Exception ex) {
-            // Si el archivo no existe ocurre un error 404
+        } catch(Exception ex) {
             archivoExiste = false;
-            
-            archivo = "archivo404.html";
-            try {
-                fin = new FileInputStream(archivo);
-                contenido = archivoAString(fin);
-                fin.close();
-            } catch(Exception ex2) {
-                // Si no exite un archivo para el error 404 se usa un contenido por defecto
-                contenido = "<html><body>404 Not Found.</body></html>";
-            }
         }
         
         if(archivoExiste) {
             DiccionarioMimeTypes diccionario = new DiccionarioMimeTypes();    
             String mimeType = diccionario.obtenerMimeType(archivo);
             
-            switch (accion) {
-                case "GET":
-                    System.out.println("Realizando un GET");
-                    GET(out, contenido, mimeType);
-                    break;
+            if (revisarMimeType(mimeType, solicitud)) {
+                // El mimetype del archivo corresponde a un mimetype aceptado
+                switch (accion) {
+                    case "GET":
+                        System.out.println("Realizando un GET");
+                        GET(out, contenidoSolicitud, mimeType);
+                        break;
 
-                case "HEAD":
-                    System.out.println("Realizando un HEAD");
-                    HEAD(out, contenido, mimeType);
-                    break;
-                    
-                case "POST":
-                    System.out.println("Realizando un POST");
-                    break;
-            }               
+                    case "HEAD":
+                        System.out.println("Realizando un HEAD");
+                        HEAD(out, contenidoSolicitud, mimeType);
+                        break;
+
+                    case "POST":
+                        System.out.println("Realizando un POST");
+                        break;
+                }
+            } else {
+                // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
+                contenidoSolicitud = "<html><body>406: Not Acceptable.</body></html>";
+                out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
+            }
         } else {
             // El archivo no existe, ocurre un error 404
-            out.write(respuestaHttp(404, "Not Found", "text/html", contenido, true));
+            contenidoSolicitud = "<html><body>404: Not Found.</body></html>";
+            out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
         }           
         
         out.close();
@@ -104,6 +98,7 @@ public class SolicitudHttp {
         out.write(respuesta);
     }
     
+    // Devuelve un String con una respuesta HTTP
     private String respuestaHttp (int codigo, String nombreCodigo, String tipoContenido, String contenido, boolean incluyeContenido) {
         String respuesta = "HTTP/1.0 " + codigo + " " + nombreCodigo + "\r\n";
         
@@ -122,6 +117,7 @@ public class SolicitudHttp {
         return respuesta;
     }
     
+    // Convierte el contenido de un archivo a un String
     private String archivoAString(FileInputStream fin) throws IOException {
         StringBuilder contenido = new StringBuilder();     
         int ch;
@@ -132,6 +128,7 @@ public class SolicitudHttp {
         return contenido.toString();
     }
     
+    // Convierte el contenido de un archivo a un arreglo de Strings por lineas
     public String[] archivoAArreglo(BufferedReader in) throws IOException {
         List<String> lineas = new ArrayList<String>();
         String linea = null;
@@ -142,6 +139,43 @@ public class SolicitudHttp {
             }
         }
         return lineas.toArray(new String[lineas.size()]);
+    }
+    
+    // Revisa si el mimetype de un archivo corresponde a algun mimetype aceptado
+    private boolean revisarMimeType(String mimeType, String[] solicitud){
+        boolean resultado = false;
+        for (int i = 0; i < solicitud.length; ++i) {
+            if (!solicitud[i].equals("")) {
+                String[] partesSolicitud = solicitud[i].split(" |,");
+                
+                // Se busca el encabezado Accept en la solicitud
+                if (partesSolicitud[0].equals("Accept:")) {
+                    
+                    // Se revisan los mimetypes aceptados para ver si aceptan al mimetype
+                    for (int j = 1; j < partesSolicitud.length; ++j) {
+                        // Se eliminan caracteres no necesarios
+                        int fin = partesSolicitud[j].indexOf(";");
+                        if (fin != -1) {
+                            partesSolicitud[j] = partesSolicitud[j].substring(0,fin);
+                        }
+                        
+                        if (partesSolicitud[j].equals("*/*") || partesSolicitud[j].equals(mimeType)) {
+                            resultado = true;
+                            break;
+                        } else {
+                            String mimeTypeGeneral = mimeType.substring(0, mimeType.indexOf("/"));
+                            mimeTypeGeneral += "/*";
+                            if (partesSolicitud[j].equals(mimeTypeGeneral)) {
+                                resultado = true;
+                                break;
+                            }
+                        }                 
+                    }
+                    break;
+                }
+            }
+        }
+        return resultado;
     }
     
 }
