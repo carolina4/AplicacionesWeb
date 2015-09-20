@@ -5,15 +5,11 @@
  */
 package ServidorHttp;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author b16744
  */
 public class HiloNuevo implements Runnable{
