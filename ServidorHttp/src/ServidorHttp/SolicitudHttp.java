@@ -27,8 +27,8 @@ public class SolicitudHttp {
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clienteVisitante.getOutputStream()));
          
         String solicitud = in.readLine();
-        
-        /*String solicitudCompleta;
+        /*
+        String solicitudCompleta;
         while ((solicitudCompleta = in.readLine()) != null) {
             System.out.println(solicitudCompleta);
             if (solicitudCompleta.isEmpty()) {
@@ -44,10 +44,25 @@ public class SolicitudHttp {
         
         String accion = st.nextToken();
         String archivo = st.nextToken();
+        String paramVariables = archivo.substring(archivo.indexOf("?")+1,archivo.length());
+        String [] variables = paramVariables.split("&");
         
+        
+        
+        switch(archivo){
+            case "/":
+            archivo = "index.html";
+            break;
+            case "/registro.html":
+            archivo = "registro.html";
+            break;          
+        }
+        
+        
+        /*
         if (archivo.equals("/")) {
             archivo = "index.html";
-        }
+        }*/
         
         FileInputStream fin = null;
         boolean fileExist = true;
@@ -68,6 +83,7 @@ public class SolicitudHttp {
 
                 case "POST":
                     System.out.println("Realizando un POST");
+                    POST(out,fin,variables);
                     break;
 
                 case "HEAD":
@@ -132,5 +148,32 @@ public class SolicitudHttp {
         out.write("Last-modified: Fri, 09 Aug 1996 14:21:40 GMT\r\n");
         out.write("\r\n");
         out.write(contenido.toString());
+    }
+    private void POST (BufferedWriter out, FileInputStream fin, String [] variables) throws IOException {
+        StringBuilder contenido = new StringBuilder();
+        
+        byte[] buffer = new byte[1024] ;
+        int length = 0;
+        int ch;
+        while((ch = fin.read()) != -1){
+            contenido.append((char)ch);
+            ++length;
+        }
+        for (String variable : variables){
+        
+            
+            System.out.println("Variable post:"+ variable);
+        
+        }
+        
+        out.write("HTTP/1.0 200 OK\r\n");
+        out.write("Date: Fri, 31 Dec 2000 23:59:59 GMT\r\n");
+        out.write("Server: Apache/0.8.4\r\n");
+        out.write("Content-Type: text/html\r\n");
+        out.write("Content-Length: " + length + "\r\n");
+        out.write("Expires: Sat, 01 Jan 2001 00:59:59 GMT\r\n");
+        out.write("Last-modified: Fri, 09 Aug 1996 14:21:40 GMT\r\n");
+        out.write("\r\n");
+        out.write(contenido.toString());  
     }
 }
