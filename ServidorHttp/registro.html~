@@ -7,7 +7,7 @@
 	
 	<body>
 		
-		<form method="post" action=".">
+		<form method="get" action=".">
 			<table>
 
 		            <tr>
