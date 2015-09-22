@@ -2,6 +2,7 @@ package ServidorHttp;
 
 import java.net.*;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.Date;
 import java.text.DateFormat;
@@ -20,6 +21,7 @@ public class SolicitudHttp {
     public void process() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(clienteVisitante.getInputStream()));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clienteVisitante.getOutputStream()));
+        DataOutputStream dout = new DataOutputStream(clienteVisitante.getOutputStream());
          
 
         String[] solicitud = archivoAArreglo(in); 
@@ -32,70 +34,59 @@ public class SolicitudHttp {
         System.out.println(solicitud[0]);
         
         String accion = tokenizer.nextToken();
-        String archivo = tokenizer.nextToken().substring(1);
-        String paramVariables = archivo.substring(archivo.indexOf("?")+1,archivo.length());
+        String nombreArchivo = tokenizer.nextToken().substring(1);
+        String paramVariables = nombreArchivo.substring(nombreArchivo.indexOf("?")+1,nombreArchivo.length());
         String [] variables = paramVariables.split("&");
 
-        switch(archivo){
+        switch(nombreArchivo){
             
             // Si no se declaro un archivo, se usa el archivo por defecto
             case "":
-            archivo = "index.html";
+            nombreArchivo = "index.html";
             break;
             case "registro.html":
-            archivo = "registro.html";
+            nombreArchivo = "registro.html";
             break;          
         }
         
-
-        String contenidoSolicitud = "";
+        File archivo = new File(nombreArchivo);
+        int tamanoArchivo = (int)archivo.length();
         
-        FileInputStream fin;
-        boolean archivoExiste = true;
-
-        try {
-            fin = new FileInputStream(archivo);
-            contenidoSolicitud = archivoAString(fin);
-            fin.close();
-        } catch(Exception ex) {
-            archivoExiste = false;
-        }
-        
-
-        if(archivoExiste) {
+        if(archivo.exists()) {
             DiccionarioMimeTypes diccionario = new DiccionarioMimeTypes();    
-            String mimeType = diccionario.obtenerMimeType(archivo);
+            String mimeType = diccionario.obtenerMimeType(nombreArchivo);
             
             if (revisarMimeType(mimeType, solicitud)) {
                 // El mimetype del archivo corresponde a un mimetype aceptado
                 switch (accion) {
                     case "GET":
                         System.out.println("Realizando un GET");
-                        out.write(respuestaHttp(200, "OK", mimeType, contenidoSolicitud, true));
+                        GET(archivo, dout, mimeType);
                         break;
 
                     case "HEAD":
                         System.out.println("Realizando un HEAD");
-                        out.write(respuestaHttp(200, "OK", mimeType, contenidoSolicitud, false));
+                        out.write(headerHttp(200, "OK", mimeType, tamanoArchivo));
                         break;
 
                     case "POST":
                         System.out.println("Realizando un POST");
-                        POST(out,contenidoSolicitud,variables);
+                        POST(archivo,dout,mimeType,variables);
                         break;
+                        
                     default:
                         // El servidor no entiende la solicitud, ocurre un error 400
-                        contenidoSolicitud = "<html><body>Error 400: Bad Request.</body></html>";
+                        String contenidoSolicitud = "<html><body>Error 400: Bad Request.</body></html>";
                         out.write(respuestaHttp(400, "Bad Request", "text/html", contenidoSolicitud, true));
                 }
             } else {
                 // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
-                contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
+                String contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
                 out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
             }
         } else {
             // El archivo no existe, ocurre un error 404
-            contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
+            String contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
             out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
         }           
         
@@ -105,7 +96,19 @@ public class SolicitudHttp {
         
     }
     
-    // Devuelve un String con una respuesta HTTP
+    private void GET (File archivo, DataOutputStream dout, String mimeType) throws FileNotFoundException, IOException {
+        byte contenidoArchivo[] = new byte[(int)archivo.length()];
+        
+        FileInputStream fin;
+        fin = new FileInputStream(archivo);
+        fin.read(contenidoArchivo);
+        fin.close();
+        
+        String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
+        dout.write(header.getBytes(Charset.forName("UTF-8")));
+        dout.write(contenidoArchivo);
+    }
+    
     private String respuestaHttp (int codigo, String nombreCodigo, String tipoContenido, String contenido, boolean incluyeContenido) {
         String respuesta = "HTTP/1.0 " + codigo + " " + nombreCodigo + "\r\n";
         
@@ -124,6 +127,20 @@ public class SolicitudHttp {
         return respuesta;
     }
     
+    private String headerHttp (int codigo, String nombreCodigo, String tipoContenido, int tamanoContenido) {
+        String respuesta = "HTTP/1.0 " + codigo + " " + nombreCodigo + "\r\n";
+        
+        DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+        Date date = new Date();
+        respuesta += "Date: " + dateFormat.format(date) + "\r\n";
+        
+        respuesta += "Server: My Server/0.1\r\n";    
+        respuesta += "Content-Type: " + tipoContenido + "\r\n";   
+        respuesta += "Content-Length: " + tamanoContenido + "\r\n\r\n";
+        
+        return respuesta;
+    }
+    
     // Convierte el contenido de un archivo a un String
     private String archivoAString(FileInputStream fin) throws IOException {
         StringBuilder contenido = new StringBuilder();     
@@ -134,27 +151,24 @@ public class SolicitudHttp {
         
         return contenido.toString();
     }
-
-    private void POST (BufferedWriter out, String contenido, String [] variables) throws IOException {
-      
+    private void POST (File archivo, DataOutputStream dout, String mimeType,String[] variables) throws FileNotFoundException, IOException {
+        byte contenidoArchivo[] = new byte[(int)archivo.length()];
+        
+        FileInputStream fin;
+        fin = new FileInputStream(archivo);
+        fin.read(contenidoArchivo);
+        fin.close();
         for (String variable : variables){
         
             
             System.out.println("Variable post:"+ variable);
         
         }
-        
-        out.write("HTTP/1.0 200 OK\r\n");
-        out.write("Date: Fri, 31 Dec 2000 23:59:59 GMT\r\n");
-        out.write("Server: Apache/0.8.4\r\n");
-        out.write("Content-Type: text/html\r\n");
-        out.write("Content-Length: " + contenido.length() + "\r\n");
-        out.write("Expires: Sat, 01 Jan 2001 00:59:59 GMT\r\n");
-        out.write("Last-modified: Fri, 09 Aug 1996 14:21:40 GMT\r\n");
-        out.write("\r\n");
-        out.write(contenido.toString());  
-    }
-    
+        String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
+        dout.write(header.getBytes(Charset.forName("UTF-8")));
+        dout.write(contenidoArchivo);
+    }    
+
     // Convierte el contenido de un archivo a un arreglo de Strings por lineas
     public String[] archivoAArreglo(BufferedReader in) throws IOException {
         List<String> lineas = new ArrayList<String>();
@@ -190,8 +204,7 @@ public class SolicitudHttp {
                             resultado = true;
                             break;
                         } else {
-                            String mimeTypeGeneral = mimeType.substring(0, mimeType.indexOf("/"));
-                            mimeTypeGeneral += "/*";
+                            String mimeTypeGeneral = obtenerMimeTypeGeneral(mimeType);
                             if (partesSolicitud[j].equals(mimeTypeGeneral)) {
                                 resultado = true;
                                 break;
@@ -206,4 +219,10 @@ public class SolicitudHttp {
     }
     
 
+    // Obtiene el mime type genereal a partir de un mimeType, por ejemplo: text/html => text/*
+    private String obtenerMimeTypeGeneral(String mimeType) {
+        String mimeTypeGeneral = mimeType.substring(0, mimeType.indexOf("/"));
+        mimeTypeGeneral += "/*";
+        return mimeTypeGeneral;
+    }
 }
