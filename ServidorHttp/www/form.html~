@@ -1,0 +1,15 @@
+<html>
+	<head>
+		<title>Index</title>
+	</head>
+	<body>Index.
+	<a href="registro.html" target="_self">Registrarse</a>
+	</body>
+</html>
+
+	<body>
+		<h1>Index.</h1>
+		<img src="imagen.jpg" alt="Hedgehog">
+	</body>
+</html>
+
