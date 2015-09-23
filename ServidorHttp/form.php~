@@ -6,13 +6,12 @@
 
 	<body>
 
-	<?
-		$usuario = $_POST['user'];
+
 		
 
-		echo 'Hola ' . htmlspecialchars($_POST["user"]) . '!';
+		<?php echo $_POST["user"]; ?>
 		
 	
-	?>
+	
 	</body>
 </html> 

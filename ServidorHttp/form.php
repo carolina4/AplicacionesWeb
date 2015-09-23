@@ -8,8 +8,8 @@
 
 
 		
-
-		<?php echo $_POST["user"]; ?
+		Bienvenido
+		<h5> <?php echo $_POST["user"]; ?><h5>
 		
 	
 	
