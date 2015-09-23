@@ -13,7 +13,6 @@ import java.text.SimpleDateFormat;
  */
 public class SolicitudHttp {
     private Socket clienteVisitante;
-    
     public SolicitudHttp(Socket clienteVisitante) throws Exception {
         this.clienteVisitante = clienteVisitante;       
     }
@@ -44,9 +43,7 @@ public class SolicitudHttp {
             case "":
             nombreArchivo = "index.html";
             break;
-            case "registro.html":
-            nombreArchivo = "registro.html";
-            break;          
+                  
         }
         
         File archivo = new File(nombreArchivo);
@@ -55,39 +52,39 @@ public class SolicitudHttp {
         if(archivo.exists()) {
             DiccionarioMimeTypes diccionario = new DiccionarioMimeTypes();    
             String mimeType = diccionario.obtenerMimeType(nombreArchivo);
-            
+            System.out.println("mimetype "+mimeType);
             if (revisarMimeType(mimeType, solicitud)) {
                 // El mimetype del archivo corresponde a un mimetype aceptado
                 switch (accion) {
                     case "GET":
                         System.out.println("Realizando un GET");
-                        GET(archivo, dout, mimeType);
+                        GET(archivo, dout, mimeType,nombreArchivo);
                         break;
 
                     case "HEAD":
                         System.out.println("Realizando un HEAD");
-                        out.write(headerHttp(200, "OK", mimeType, tamanoArchivo));
+                        out.write(headerHttp(200, "OK", mimeType, tamanoArchivo,nombreArchivo));
                         break;
 
                     case "POST":
                         System.out.println("Realizando un POST");
-                        POST(archivo,dout,mimeType,variables);
+                        POST(archivo,dout,mimeType,variables,nombreArchivo);
                         break;
                         
                     default:
                         // El servidor no entiende la solicitud, ocurre un error 400
                         String contenidoSolicitud = "<html><body>Error 400: Bad Request.</body></html>";
-                        out.write(respuestaHttp(400, "Bad Request", "text/html", contenidoSolicitud, true));
+                        out.write(respuestaHttp(400, "Bad Request", "text/html", contenidoSolicitud, true,nombreArchivo));
                 }
             } else {
                 // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
                 String contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
-                out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
+                out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true,nombreArchivo));
             }
         } else {
             // El archivo no existe, ocurre un error 404
             String contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
-            out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
+            out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true,nombreArchivo));
         }           
         
         out.close();
@@ -96,7 +93,7 @@ public class SolicitudHttp {
         
     }
     
-    private void GET (File archivo, DataOutputStream dout, String mimeType) throws FileNotFoundException, IOException {
+    private void GET (File archivo, DataOutputStream dout, String mimeType,String nombreArchivo) throws FileNotFoundException, IOException {
         byte contenidoArchivo[] = new byte[(int)archivo.length()];
         
         FileInputStream fin;
@@ -104,12 +101,12 @@ public class SolicitudHttp {
         fin.read(contenidoArchivo);
         fin.close();
         
-        String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
+        String header = headerHttp(200, "OK", mimeType, (int)archivo.length(),nombreArchivo);
         dout.write(header.getBytes(Charset.forName("UTF-8")));
         dout.write(contenidoArchivo);
     }
     
-    private String respuestaHttp (int codigo, String nombreCodigo, String tipoContenido, String contenido, boolean incluyeContenido) {
+    private String respuestaHttp (int codigo, String nombreCodigo, String tipoContenido, String contenido, boolean incluyeContenido,String nombreArchivo) {
         String respuesta = "HTTP/1.0 " + codigo + " " + nombreCodigo + "\r\n";
         
         DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
@@ -119,7 +116,7 @@ public class SolicitudHttp {
         respuesta += "Server: My Server/0.1\r\n";    
         respuesta += "Content-Type: " + tipoContenido + "\r\n";   
         respuesta += "Content-Length: " + contenido.length() + "\r\n\r\n";
-        
+       // respuesta +="Content-Disposition: inline; filename=" +"\"" + nombreArchivo+"\""+"\r\n";
         if (incluyeContenido) {
             respuesta += contenido;
         }
@@ -127,7 +124,7 @@ public class SolicitudHttp {
         return respuesta;
     }
     
-    private String headerHttp (int codigo, String nombreCodigo, String tipoContenido, int tamanoContenido) {
+    private String headerHttp (int codigo, String nombreCodigo, String tipoContenido, int tamanoContenido, String nombreArchivo) {
         String respuesta = "HTTP/1.0 " + codigo + " " + nombreCodigo + "\r\n";
         
         DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
@@ -137,6 +134,7 @@ public class SolicitudHttp {
         respuesta += "Server: My Server/0.1\r\n";    
         respuesta += "Content-Type: " + tipoContenido + "\r\n";   
         respuesta += "Content-Length: " + tamanoContenido + "\r\n\r\n";
+        //respuesta +="Content-Disposition: inline; filename=" +"\"" + nombreArchivo+"\""+"\r\n";
         
         return respuesta;
     }
@@ -151,7 +149,7 @@ public class SolicitudHttp {
         
         return contenido.toString();
     }
-    private void POST (File archivo, DataOutputStream dout, String mimeType,String[] variables) throws FileNotFoundException, IOException {
+    private void POST (File archivo, DataOutputStream dout, String mimeType,String[] variables, String nombreArchivo) throws FileNotFoundException, IOException {
         byte contenidoArchivo[] = new byte[(int)archivo.length()];
         
         FileInputStream fin;
@@ -164,7 +162,7 @@ public class SolicitudHttp {
             System.out.println("Variable post:"+ variable);
         
         }
-        String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
+        String header = headerHttp(200, "OK", mimeType, (int)archivo.length(),nombreArchivo);
         dout.write(header.getBytes(Charset.forName("UTF-8")));
         dout.write(contenidoArchivo);
     }    
@@ -218,7 +216,6 @@ public class SolicitudHttp {
         return resultado;
     }
     
-
     // Obtiene el mime type genereal a partir de un mimeType, por ejemplo: text/html => text/*
     private String obtenerMimeTypeGeneral(String mimeType) {
         String mimeTypeGeneral = mimeType.substring(0, mimeType.indexOf("/"));

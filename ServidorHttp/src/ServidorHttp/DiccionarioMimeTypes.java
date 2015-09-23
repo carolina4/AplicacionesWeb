@@ -24,6 +24,7 @@ public class DiccionarioMimeTypes {
         mapa.addMimeTypes("image/svg svg SVG");
         mapa.addMimeTypes("text/css css CSS");
         mapa.addMimeTypes("text/html asp ASP");
+        mapa.addMimeTypes("text/html html htm HTML");
     }
     
     public String obtenerMimeType(String nombreArchivo) {
