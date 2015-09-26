@@ -1,0 +1,6 @@
+Metodo: GET Hora: 150926141030 Servidor: 192.168.2.146:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926141031 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926141031 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150926141033 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /registro.html Datos: 
+Metodo: GET Hora: 150926141033 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: POST Hora: 150926141034 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/registro.html URL: /form.php Datos: user=kalam&password=123
