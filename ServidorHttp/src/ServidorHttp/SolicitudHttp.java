@@ -13,16 +13,18 @@ import java.text.SimpleDateFormat;
  */
 public class SolicitudHttp {
     private Socket clienteVisitante;
+    Bitacora bitacora;
     
     public SolicitudHttp(Socket clienteVisitante) throws Exception {
-        this.clienteVisitante = clienteVisitante;       
+        this.clienteVisitante = clienteVisitante;  
+        this.bitacora = new Bitacora();
     }
     
     public void process() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(clienteVisitante.getInputStream()));
         BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clienteVisitante.getOutputStream()));
         DataOutputStream dout = new DataOutputStream(clienteVisitante.getOutputStream());
-         
+        
         String[] solicitud = leerHeaderSolicitud(in); 
         // Para que el programa no prouzca errores con solicitudes vacias
         if (solicitud.length == 0) {
@@ -78,10 +80,13 @@ public class SolicitudHttp {
         }
         
         // Se inserta la solicitud a la bitacora
+        
         if (accion.equals("POST")) {
-            actualizarBitacora(accion, nombreArchivo, datosPOST, servidor, refiere);
+            
+            this.bitacora.actualizarBitacora(accion, nombreArchivo, datosPOST, servidor, refiere);
         } else {
-            actualizarBitacora(accion, nombreArchivo, datosGET, servidor, refiere);
+            
+            this.bitacora.actualizarBitacora(accion, nombreArchivo, datosGET, servidor, refiere);
         }     
         
         // Se revisa por error 400
@@ -293,6 +298,7 @@ public class SolicitudHttp {
     }
     
     // Actualiza el archivo de la bitacora de solicitudes
+    /*
     private void actualizarBitacora(String accion, String nombreArchivo, String datos, String servidor, String refiere) {
         DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
         Date date = new Date();
@@ -301,7 +307,7 @@ public class SolicitudHttp {
         System.out.println("Metodo: " + accion + " Hora: " + estampillaTiempo + " Servidor: " + servidor + " Refiere: " + refiere + " URL: " + nombreArchivo + " Datos: " + datos);
         
         // FALTA
-    }
+    }*/
     
     // Procesa un archivo PHP de forma que regrese el contenido de la pagina preprocesado
     private String procesarPHP (File archivo, String datos) throws IOException, InterruptedException {
@@ -354,5 +360,7 @@ public class SolicitudHttp {
         raf.writeBytes(linea);
         raf.write(text);
         raf.close();
+
     }
+
 }
