@@ -1,37 +1,13 @@
-<<<<<<< HEAD:ServidorHttp/form.php
+<?php $_POST = $_GET; ?>
 <!doctype html>
 <html>
-<head>
-   <title>Restringir por edad</title>
-</head>
-
+	<head>
+		<title>Bienvenido</title>
+	</head>
 	<body>
-
-
-		
-		Bienvenido
-		<h5> <?php echo $_POST["user"]; ?><h5>
-		
 	
+		<h1>Bienvenido(a) <?php echo $_POST['user']; ?></h1>
 	
 	</body>
-</html> 
-=======
-<!doctype html>
-<html>
-<head>
-   <title>Restringir por edad</title>
-</head>
-
-	<body>
-
-
-		
-
-		<?php echo $_POST["user"]; ?
-		
-	
-	
-	</body>
-</html> 
+</html>
 
