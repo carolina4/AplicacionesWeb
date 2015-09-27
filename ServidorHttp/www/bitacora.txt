@@ -41,3 +41,58 @@ Metodo: HEAD Hora: 150926181826 Servidor: localhost:5217 Refiere:  URL: / Datos:
 Metodo: GET Hora: 150926181834 Servidor: localhost:5217 Refiere:  URL: / Datos: 
 Metodo: GET Hora: 150926181853 Servidor: localhost:5217 Refiere:  URL: / Datos: 
 Metodo: POST Hora: 150926181919 Servidor: localhost:5217 Refiere:  URL: / Datos: mensaje=Hola+mundo
+Metodo: POST Hora: 150926182245 Servidor: localhost:5217 Refiere:  URL: / Datos: mensaje=Hola
+Metodo: POST Hora: 150926182326 Servidor: localhost:5217 Refiere:  URL: / Datos: mensaje=Hola
+Metodo: GET Hora: 150926182448 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926182529 Servidor: localhost:5217 Refiere:  URL: /registro.html Datos: user=kalam
+Metodo: POST Hora: 150926183001 Servidor: localhost:5217 Refiere:  URL: /registro.html Datos: user=kalam
+Metodo: POST Hora: 150926183518 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kalam
+Metodo: POST Hora: 150926183538 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kjl
+Metodo: POST Hora: 150926183706 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kalam
+Metodo: POST Hora: 150926183726 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kalam
+Metodo: HEAD Hora: 150926183811 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926185255 Servidor: 192.168.2.108:5217 Refiere:  URL: /registro.html Datos: user=ker
+Metodo: POST Hora: 150926185258 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/registro.html?user=ker URL: /form.php Datos: user=&password=
+Metodo: GET Hora: 150926190036 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150926190049 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926190121 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150926190140 Servidor: 192.168.2.108:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150926190140 Servidor: 192.168.2.108:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150926190141 Servidor: 192.168.2.108:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150926190146 Servidor: 192.168.2.108:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150926190202 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926190202 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926190214 Servidor: 192.168.2.108:5217 Refiere:  URL: /r.html Datos: 
+Metodo: GET Hora: 150926190214 Servidor: 192.168.2.108:5217 Refiere:  URL: /r.html Datos: 
+Metodo: GET Hora: 150926190214 Servidor: 192.168.2.108:5217 Refiere:  URL: /r.html Datos: 
+Metodo: GET Hora: 150926190308 Servidor: 192.168.2.108:5217 Refiere:  URL: /index.html Datos: 
+Metodo: GET Hora: 150926190308 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/index.html URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926190526 Servidor: 192.168.2.108:5217 Refiere:  URL: /index.html Datos: 
+Metodo: GET Hora: 150926190526 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/index.html URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926190534 Servidor: 192.168.2.108:5217 Refiere:  URL: /i.html Datos: 
+Metodo: GET Hora: 150926190534 Servidor: 192.168.2.108:5217 Refiere:  URL: /i.html Datos: 
+Metodo: GET Hora: 150926190534 Servidor: 192.168.2.108:5217 Refiere:  URL: /i.html Datos: 
+Metodo: GET Hora: 150926190539 Servidor: 192.168.2.108:5217 Refiere:  URL: /i.html Datos: 
+Metodo: GET Hora: 150926191147 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926191147 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926191201 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926191201 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926191201 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926191206 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926191236 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926191336 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926191836 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926192836 Servidor: 192.168.2.108:5217 Refiere:  URL: /ind.html Datos: 
+Metodo: GET Hora: 150926194015 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926194015 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926194903 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926194903 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926195738 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926195738 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926195746 Servidor: 192.168.2.108:5217 Refiere:  URL: /i.html Datos: 
+Metodo: GET Hora: 150926195850 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926195850 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926195900 Servidor: 192.168.2.108:5217 Refiere:  URL: /e.html Datos: 
+Metodo: POST Hora: 150926200647 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kalam
+Metodo: GET Hora: 150926200707 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926200824 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 

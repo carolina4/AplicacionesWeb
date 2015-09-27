@@ -109,7 +109,6 @@ public class SolicitudHttp {
         
         // La carpeta www es donde se guardan los archivos que el servidor devuelve al cliete
         File archivo = new File("www" + nombreArchivo);
-        int tamanoArchivo = (int)archivo.length();
         
         if(archivo.exists()) {
             DiccionarioMimeTypes diccionario = new DiccionarioMimeTypes();    
@@ -133,17 +132,18 @@ public class SolicitudHttp {
                     default:
                         // El servidor no entiende la solicitud, ocurre un error 501
                         String contenidoSolicitud = "<html><body>Error 501: Not Implemented.</body></html>";
-                        out.write(respuestaHttp(501, "Not Implemented", "text/html", contenidoSolicitud, true));
+                        dout.writeUTF(respuestaHttp(501, "Not Implemented", "text/html", contenidoSolicitud, true));
                 }
             } else {
                 // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
                 String contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
-                out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
+                dout.writeUTF(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
             }
         } else {
             // El archivo no existe, ocurre un error 404
             String contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
-            out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
+            dout.writeUTF(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
+            
         }           
         
         dout.close();
@@ -173,6 +173,7 @@ public class SolicitudHttp {
             String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
             dout.write(header.getBytes(Charset.forName("UTF-8")));
             dout.write(contenidoArchivo);
+           
         }
     }
     
