@@ -10,12 +10,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author b16744
+ * @author Carolina y Kalam
  */
 public class HiloNuevo implements Runnable{
 
     protected Socket socketCliente = null;
-    protected String serverText   = null;
 
     public HiloNuevo(Socket clientSocket) {
         this.socketCliente = clientSocket;

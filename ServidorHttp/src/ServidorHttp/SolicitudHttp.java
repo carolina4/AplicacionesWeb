@@ -9,26 +9,26 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
- * @author b16744
+ * @author Carolina y Kalam
  */
 public class SolicitudHttp {
     private Socket clienteVisitante;
-    Bitacora bitacora;
+    private Bitacora bitacora;
+    private DiccionarioMimeTypes diccionario;
     
     public SolicitudHttp(Socket clienteVisitante) throws Exception {
         this.clienteVisitante = clienteVisitante;  
-        this.bitacora = new Bitacora();
+        bitacora = new Bitacora();
+        diccionario = new DiccionarioMimeTypes();
     }
     
     public void process() throws Exception {
         BufferedReader in = new BufferedReader(new InputStreamReader(clienteVisitante.getInputStream()));
-        BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clienteVisitante.getOutputStream()));
-        DataOutputStream dout = new DataOutputStream(clienteVisitante.getOutputStream());
+        DataOutputStream out = new DataOutputStream(clienteVisitante.getOutputStream());
         
         String[] solicitud = leerHeaderSolicitud(in); 
         // Para que el programa no prouzca errores con solicitudes vacias
         if (solicitud.length == 0) {
-            dout.close();
             out.close();
             in.close();
             clienteVisitante.close();
@@ -72,30 +72,25 @@ public class SolicitudHttp {
         // Se obtiene el contenido de la solicitud si es un POST
         if (accion.equals("POST")) {
             int i = 0;
-            while(in.ready())
-            {
+            while(in.ready()) {
                 i = in.read();
                 datosPOST += (char)i;
             }
         }
         
-        // Se inserta la solicitud a la bitacora
-        
-        if (accion.equals("POST")) {
-            
-            this.bitacora.actualizarBitacora(accion, nombreArchivo, datosPOST, servidor, refiere);
-        } else {
-            
-            this.bitacora.actualizarBitacora(accion, nombreArchivo, datosGET, servidor, refiere);
+        // Se inserta la solicitud a la bitacora      
+        if (accion.equals("POST")) {        
+            bitacora.actualizarBitacora(accion, nombreArchivo, datosPOST, servidor, refiere);
+        } else {        
+            bitacora.actualizarBitacora(accion, nombreArchivo, datosGET, servidor, refiere);
         }     
         
         // Se revisa por error 400
         if (servidor.equals("")) {
             // No se incluyo el cabezado host, ocurre un error 400
             String contenidoSolicitud = "<html><body>Error 400: Bad Request.</body></html>";
-            out.write(respuestaHttp(400, "Bad Request", "text/html", contenidoSolicitud, true));
+            out.write(respuestaHttp(400, "Bad Request", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
             
-            dout.close();
             out.close();
             in.close();
             clienteVisitante.close();
@@ -112,58 +107,56 @@ public class SolicitudHttp {
         int tamanoArchivo = (int)archivo.length();
         
         if(archivo.exists()) {
-            DiccionarioMimeTypes diccionario = new DiccionarioMimeTypes();    
             String mimeType = diccionario.obtenerMimeType(nombreArchivo);
             
             if (revisarMimeType(mimeType, acepta)) {
                 // El mimetype del archivo corresponde a un mimetype aceptado
                 switch (accion) {
                     case "GET":
-                        GET(archivo, dout, mimeType, datosGET);
+                        GET(archivo, out, mimeType, datosGET);
                         break;
 
                     case "HEAD":
-                        out.write(headerHttp(200, "OK", mimeType, tamanoArchivo));
+                        out.write(headerHttp(200, "OK", mimeType, tamanoArchivo).getBytes(Charset.forName("UTF-8")));
                         break;
 
                     case "POST":
-                        POST(archivo, dout, mimeType, datosPOST);
+                        POST(archivo, out, mimeType, datosPOST);
                         break;
                         
                     default:
                         // El servidor no entiende la solicitud, ocurre un error 501
                         String contenidoSolicitud = "<html><body>Error 501: Not Implemented.</body></html>";
-                        out.write(respuestaHttp(501, "Not Implemented", "text/html", contenidoSolicitud, true));
+                        out.write(respuestaHttp(501, "Not Implemented", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
                 }
             } else {
                 // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
                 String contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
-                out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud, true));
+                out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
             }
         } else {
             // El archivo no existe, ocurre un error 404
             String contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
-            out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud, true));
+            out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
         }           
         
-        dout.close();
         out.close();
         in.close();
-        clienteVisitante.close();
-        
+        clienteVisitante.close();    
     }
     
     private void GET (File archivo, DataOutputStream dout, String mimeType, String datosGET) throws FileNotFoundException, IOException, InterruptedException {
-        int dot = archivo.getName().lastIndexOf(".");
+        int punto = archivo.getName().lastIndexOf(".");
         
-        if (archivo.getName().substring(dot + 1).equals("php")) {
+        // Se revisa la extension del archivo
+        if (archivo.getName().substring(punto + 1).equals("php")) {
             // Si el archivo es PHP hay que preprocesarlo
-            String contenido = procesarPHP(archivo, datosGET);
             
-            String header = headerHttp(200, "OK", mimeType, contenido.length());
-            dout.write(header.getBytes(Charset.forName("UTF-8")));
-            dout.write(contenido.getBytes(Charset.forName("UTF-8")));
+            String respuesta = respuestaHttp(200, "OK", mimeType, procesarPHP(archivo, datosGET));
+            dout.write(respuesta.getBytes(Charset.forName("UTF-8")));
         } else {
+            // Si el archivo no es PHP se lee y se envia como bytes
+            
             byte contenidoArchivo[] = new byte[(int)archivo.length()];
 
             FileInputStream fin = new FileInputStream(archivo);
@@ -179,14 +172,24 @@ public class SolicitudHttp {
     private void POST (File archivo, DataOutputStream dout, String mimeType, String datosPOST) throws FileNotFoundException, IOException, InterruptedException {        
         int dot = archivo.getName().lastIndexOf(".");
         
+        // Se revisa la extension del archivo
         if (archivo.getName().substring(dot + 1).equals("php")) {
             // Si el archivo es PHP hay que preprocesarlo
-            String contenido = procesarPHP(archivo, datosPOST);
             
-            String header = headerHttp(200, "OK", mimeType, contenido.length());
-            dout.write(header.getBytes(Charset.forName("UTF-8")));
-            dout.write(contenido.getBytes(Charset.forName("UTF-8")));
+            // Se crea un archivo temporal para el procesado
+            File temp = File.createTempFile("tmp", ".php", null);
+            BufferedWriter output = new BufferedWriter(new FileWriter(temp));
+            output.write("<?php $_POST = $_GET; ?>\n");
+            output.write(archivoAString(archivo));
+            output.close();
+            
+            String respuesta = respuestaHttp(200, "OK", mimeType, procesarPHP(temp, datosPOST));
+            dout.write(respuesta.getBytes(Charset.forName("UTF-8")));
+              
+            temp.deleteOnExit();
         } else {
+            // Si no es un archivo PHP se devuelve una pagina con los datos del contenido del request
+            
             String [] variables = datosPOST.split("&");
             String contenidoArchivo = "<html><body>";
             for (int i = 0; i < variables.length; ++i) {
@@ -196,29 +199,16 @@ public class SolicitudHttp {
             }
             contenidoArchivo += "</body></html>";
 
-            String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
-            dout.write(header.getBytes(Charset.forName("UTF-8")));
-            dout.write(contenidoArchivo.getBytes(Charset.forName("UTF-8")));
+            String respuesta = respuestaHttp(200, "OK", mimeType, contenidoArchivo);
+            dout.write(respuesta.getBytes(Charset.forName("UTF-8")));
         }
   
     }
     
     // Devuelve un string con una respuesta HTTP completa con un contenido que es texto
-    private String respuestaHttp (int codigo, String nombreCodigo, String tipoContenido, String contenido, boolean incluyeContenido) {
-        String respuesta = "HTTP/1.0 " + codigo + " " + nombreCodigo + "\r\n";
-        
-        DateFormat dateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
-        Date date = new Date();
-        respuesta += "Date: " + dateFormat.format(date) + "\r\n";
-        
-        respuesta += "Server: My Server/0.1\r\n";    
-        respuesta += "Content-Type: " + tipoContenido + "\r\n";   
-        respuesta += "Content-Length: " + contenido.length() + "\r\n\r\n";
-        
-        if (incluyeContenido) {
-            respuesta += contenido;
-        }
-        
+    private String respuestaHttp (int codigo, String nombreCodigo, String tipoContenido, String contenido) {
+        String respuesta = headerHttp (codigo, nombreCodigo, tipoContenido, contenido.length());
+        respuesta += contenido;
         return respuesta;
     }
     
@@ -238,7 +228,15 @@ public class SolicitudHttp {
     }
     
     // Convierte el contenido de un archivo a un String
-    private String archivoAString(FileInputStream fin) throws IOException {
+    private String archivoAString (File archivo) throws FileNotFoundException, IOException {
+        FileInputStream fin = new FileInputStream(archivo);
+        String contenido = streamAString(fin);
+        fin.close();
+        return contenido;
+    }
+    
+    // Convierte el contenido de un stream a un String
+    private String streamAString(FileInputStream fin) throws IOException {
         StringBuilder contenido = new StringBuilder();     
         int ch;
         while((ch = fin.read()) != -1){
@@ -248,7 +246,7 @@ public class SolicitudHttp {
         return contenido.toString();
     }
     
-    // Lee y convierte el header de la solicitud a un arreglo de Strings
+    // Lee y convierte el header de una solicitud a un arreglo de Strings
     public String[] leerHeaderSolicitud(BufferedReader in) throws IOException {
         List<String> lineas = new ArrayList<String>();
         String linea = null;
@@ -290,38 +288,18 @@ public class SolicitudHttp {
         return resultado;
     }
     
-    // Obtiene el mime type genereal a partir de un mimeType, por ejemplo: text/html => text/*
+    // Obtiene el Mime Type genereal a partir de un Mime Type, por ejemplo: text/html => text/*
     private String obtenerMimeTypeGeneral(String mimeType) {
         String mimeTypeGeneral = mimeType.substring(0, mimeType.indexOf("/"));
         mimeTypeGeneral += "/*";
         return mimeTypeGeneral;
     }
     
-    // Actualiza el archivo de la bitacora de solicitudes
-    /*
-    private void actualizarBitacora(String accion, String nombreArchivo, String datos, String servidor, String refiere) {
-        DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
-        Date date = new Date();
-        String estampillaTiempo = dateFormat.format(date);
-
-        System.out.println("Metodo: " + accion + " Hora: " + estampillaTiempo + " Servidor: " + servidor + " Refiere: " + refiere + " URL: " + nombreArchivo + " Datos: " + datos);
-        
-        // FALTA
-    }*/
-    
     // Procesa un archivo PHP de forma que regrese el contenido de la pagina preprocesado
     private String procesarPHP (File archivo, String datos) throws IOException, InterruptedException {
-        // Se hace una equivalencia entre las variables de get y post
-        BufferedReader br = new BufferedReader(new FileReader(archivo));
-        String primeraLinea = br.readLine().trim();
-        if (!primeraLinea.equals("<?php $_POST = $_GET; ?>") ) {
-            agregarLineaAlInicioArchivo(archivo, "<?php $_POST = $_GET; ?>\n");
-        }
-        br.close();
-        
         // Se crea una instruccion php-cgi con sus parametros
         String [] variables = datos.split("&");  
-        String instruccion = "php-cgi -f " + archivo.getPath();
+        String instruccion = "php-cgi -f " + archivo.getPath();     
         for (int i = 0; i<variables.length; ++i) {
             instruccion += " ";
             instruccion += variables[i];
@@ -346,21 +324,9 @@ public class SolicitudHttp {
             resultado += linea;
         }
 
+        error.close();
         input.close();
-        
         return resultado;
-    }
-    
-    // Agrega el contenido de un string al inicio de un archivo
-    private void agregarLineaAlInicioArchivo(File archivo, String linea) throws FileNotFoundException, IOException {
-        RandomAccessFile raf = new RandomAccessFile(archivo, "rw");
-        byte[] text = new byte[(int) raf.length()];
-        raf.readFully(text);
-        raf.seek(0);
-        raf.writeBytes(linea);
-        raf.write(text);
-        raf.close();
-
     }
 
 }

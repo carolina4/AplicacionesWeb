@@ -15,8 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author kalam
+ * @author Carolina y Kalam
  */
 public class Bitacora {
     FileWriter bitacora = null;
@@ -33,10 +32,14 @@ public class Bitacora {
         this.pw = new PrintWriter(this.bitacora);
     }
     
+    // Agrega una entrada a la bitacora de solicitudes
     public void actualizarBitacora(String accion, String nombreArchivo, String datos, String servidor, String refiere) {
         DateFormat dateFormat = new SimpleDateFormat("yyMMddHHmmss");
         Date date = new Date();
         String estampillaTiempo = dateFormat.format(date);
+        
+        System.out.println("Metodo: " + accion + " Hora: " + estampillaTiempo + " Servidor: " + servidor + " Refiere: " + refiere + " URL: " + nombreArchivo + " Datos: " + datos);
+        
         try{
             this.pw.println("Metodo: " + accion + " Hora: " + estampillaTiempo + " Servidor: " + servidor + " Refiere: " + refiere + " URL: " + nombreArchivo + " Datos: " + datos);
        
@@ -44,11 +47,12 @@ public class Bitacora {
             e.printStackTrace();
         } finally {
            try {
-                if (null != this.bitacora)
+                if (null != this.bitacora) {
                    this.bitacora.close();
-                } catch (Exception e2) {
-                   e2.printStackTrace();
                 }
+            } catch (Exception e2) {
+                e2.printStackTrace();
+            }
         }
 
     }
