@@ -1,20 +1,22 @@
 package ServidorHttp;
 
-import java.net.*;
 import java.io.*;
+import java.net.Socket;
 import java.nio.charset.Charset;
-import java.util.*;
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * @author Carolina y Kalam
  */
 public class SolicitudHttp {
-    private Socket clienteVisitante;
-    private Bitacora bitacora;
-    private DiccionarioMimeTypes diccionario;
+    private final Socket clienteVisitante;
+    private final Bitacora bitacora;
+    private final DiccionarioMimeTypes diccionario;
     
     public SolicitudHttp(Socket clienteVisitante) throws Exception {
         this.clienteVisitante = clienteVisitante;  
@@ -26,8 +28,9 @@ public class SolicitudHttp {
         BufferedReader in = new BufferedReader(new InputStreamReader(clienteVisitante.getInputStream()));
         DataOutputStream out = new DataOutputStream(clienteVisitante.getOutputStream());
         
-        String[] solicitud = leerHeaderSolicitud(in); 
-        // Para que el programa no prouzca errores con solicitudes vacias
+        String[] solicitud = leerHeaderSolicitud(in);
+        
+        // Para que el programa no produzca errores con solicitudes vacias
         if (solicitud.length == 0) {
             out.close();
             in.close();
@@ -51,7 +54,6 @@ public class SolicitudHttp {
         String servidor = "";
         String refiere = "";
         String acepta = "";
-        String datosPOST = "";
         
         for (int i = 0; i < solicitud.length; ++i) {
             if (!solicitud[i].equals("")) {
@@ -70,8 +72,9 @@ public class SolicitudHttp {
         }
         
         // Se obtiene el contenido de la solicitud si es un POST
+        String datosPOST = "";
         if (accion.equals("POST")) {
-            int i = 0;
+            int i;
             while(in.ready()) {
                 i = in.read();
                 datosPOST += (char)i;
@@ -102,7 +105,7 @@ public class SolicitudHttp {
             nombreArchivo = "/index.html";
         }
         
-        // La carpeta www es donde se guardan los archivos que el servidor devuelve al cliete
+        // La carpeta www es donde se guardan los archivos que el servidor devuelve al cliente
         File archivo = new File("www" + nombreArchivo);
         
         if(archivo.exists()) {
@@ -114,11 +117,9 @@ public class SolicitudHttp {
                     case "GET":
                         GET(archivo, out, mimeType, datosGET);
                         break;
-
+                        
                     case "HEAD":
-
                         HEAD(archivo, out, mimeType);
-
                         break;
 
                     case "POST":
@@ -129,21 +130,16 @@ public class SolicitudHttp {
                         // El servidor no entiende la solicitud, ocurre un error 501
                         String contenidoSolicitud = "<html><body>Error 501: Not Implemented.</body></html>";
                         out.write(respuestaHttp(501, "Not Implemented", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
-
                 }
             } else {
                 // El mimetype del archivo no corresponde a un mimetype aceptado, ocurre un error 406
                 String contenidoSolicitud = "<html><body>Error 406: Not Acceptable.</body></html>";
-
                 out.write(respuestaHttp(406, "Not Acceptable", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
-
             }
         } else {
             // El archivo no existe, ocurre un error 404
             String contenidoSolicitud = "<html><body>Error 404: Not Found.</body></html>";
-
             out.write(respuestaHttp(404, "Not Found", "text/html", contenidoSolicitud).getBytes(Charset.forName("UTF-8")));
-
         }           
         
         out.close();
@@ -177,10 +173,10 @@ public class SolicitudHttp {
     }
     
     private void HEAD(File archivo, DataOutputStream dout, String mimeType) throws IOException{
-            String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
-            dout.write(header.getBytes(Charset.forName("UTF-8")));
-    
+        String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
+        dout.write(header.getBytes(Charset.forName("UTF-8")));
     }
+    
     private void POST (File archivo, DataOutputStream dout, String mimeType, String datosPOST) throws FileNotFoundException, IOException, InterruptedException {        
         int dot = archivo.getName().lastIndexOf(".");
         
@@ -214,7 +210,6 @@ public class SolicitudHttp {
             String respuesta = respuestaHttp(200, "OK", mimeType, contenidoArchivo);
             dout.write(respuesta.getBytes(Charset.forName("UTF-8")));
         }
-  
     }
     
     // Devuelve un string con una respuesta HTTP completa con un contenido que es texto
@@ -260,8 +255,8 @@ public class SolicitudHttp {
     
     // Lee y convierte el header de una solicitud a un arreglo de Strings
     public String[] leerHeaderSolicitud(BufferedReader in) throws IOException {
-        List<String> lineas = new ArrayList<String>();
-        String linea = null;
+        List<String> lineas = new ArrayList<>();
+        String linea;
         while ((linea = in.readLine()) != null) {
             lineas.add(linea.trim());
             if (linea.isEmpty()) {
@@ -312,11 +307,9 @@ public class SolicitudHttp {
         // Se crea una instruccion php-cgi con sus parametros
         String [] variables = datos.split("&");  
         String instruccion = "php-cgi -f " + archivo.getPath();     
-
         for (int i = 0; i<variables.length; ++i) {
             instruccion += " ";
             instruccion += variables[i];
-            System.out.println(instruccion);
         }
         
         // Se ejecuta la instruccion php-cgi
@@ -336,7 +329,6 @@ public class SolicitudHttp {
         BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
         while((linea=input.readLine()) != null){
             resultado += linea;
-            System.out.println(resultado);
         }
 
         error.close();
