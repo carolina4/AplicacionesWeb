@@ -4,6 +4,7 @@ Metodo: GET Hora: 150926141031 Servidor: 192.168.2.146:5217 Refiere:  URL: /favi
 Metodo: GET Hora: 150926141033 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /registro.html Datos: 
 Metodo: GET Hora: 150926141033 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
 Metodo: POST Hora: 150926141034 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/registro.html URL: /form.php Datos: user=kalam&password=123
+<<<<<<< HEAD
 Metodo: GET Hora: 150926162238 Servidor: 192.168.2.108:5217 Refiere:  URL: / Datos: 
 Metodo: GET Hora: 150926162238 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /imagen.jpg Datos: 
 Metodo: GET Hora: 150926162238 Servidor: 192.168.2.108:5217 Refiere: http://192.168.2.108:5217/ URL: /favicon.ico Datos: 
@@ -96,3 +97,91 @@ Metodo: GET Hora: 150926195900 Servidor: 192.168.2.108:5217 Refiere:  URL: /e.ht
 Metodo: POST Hora: 150926200647 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kalam
 Metodo: GET Hora: 150926200707 Servidor: localhost:5217 Refiere:  URL: / Datos: 
 Metodo: GET Hora: 150926200824 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 
+=======
+Metodo: GET Hora: 150926170345 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926170346 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926170347 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926170354 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926170528 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926170637 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926170752 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926171242 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926171722 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926172003 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926172819 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926175538 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926181042 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926181205 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: POST Hora: 150926181401 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=caro&password=asdf
+Metodo: GET Hora: 150926183557 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926183557 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926183600 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926183611 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=qwerty
+Metodo: GET Hora: 150926183733 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: 
+Metodo: GET Hora: 150926183741 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926183741 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926183743 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926183750 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=asdf
+Metodo: GET Hora: 150926184045 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: 
+Metodo: GET Hora: 150926184054 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926184054 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926184056 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926184102 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=asdf
+Metodo: GET Hora: 150926184113 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: 
+Metodo: GET Hora: 150926184127 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926184127 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926184132 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926184140 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=qwer
+Metodo: GET Hora: 150926184348 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: 
+Metodo: GET Hora: 150926184353 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926184353 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926184355 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926184403 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=qweerty
+Metodo: POST Hora: 150926185319 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=qweerty
+Metodo: GET Hora: 150926185439 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185439 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185440 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185445 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185515 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185605 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185605 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185705 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185720 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185720 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185800 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185800 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185840 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926185840 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190009 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190009 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190030 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190030 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190104 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190104 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190127 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190127 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190216 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190216 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190326 Servidor: localhost:5217 Refiere:  URL: /ejemplo.php Datos: 
+Metodo: GET Hora: 150926190334 Servidor: localhost:5217 Refiere:  URL: /adfasdf Datos: 
+Metodo: GET Hora: 150926190334 Servidor: localhost:5217 Refiere:  URL: /adfasdf Datos: 
+Metodo: GET Hora: 150926190334 Servidor: localhost:5217 Refiere:  URL: /adfasdf Datos: 
+Metodo: GET Hora: 150926190339 Servidor: localhost:5217 Refiere:  URL: /adfasdf Datos: 
+Metodo: GET Hora: 150926190409 Servidor: localhost:5217 Refiere:  URL: /adfasdf Datos: 
+Metodo: GET Hora: 150926190509 Servidor: localhost:5217 Refiere:  URL: /adfasdf Datos: 
+Metodo: GET Hora: 150926190748 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926190748 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926190748 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926190748 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926190751 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926190758 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carolina&password=1234
+Metodo: GET Hora: 150926190818 Servidor: localhost:5217 Refiere:  URL: /prueba.php Datos: 
+Metodo: GET Hora: 150926190822 Servidor: localhost:5217 Refiere:  URL: /ejemplo.php Datos: 
+Metodo: GET Hora: 150926191129 Servidor: localhost:5217 Refiere:  URL: /ejemplo.php Datos: 
+Metodo: GET Hora: 150926192159 Servidor: localhost:5217 Refiere:  URL: /ejemplo.php Datos: 
+Metodo: GET Hora: 150926192206 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926192206 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926192209 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /registro.html Datos: 
+Metodo: POST Hora: 150926192217 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carito&password=qwerty
+Metodo: GET Hora: 150926192259 Servidor: localhost:5217 Refiere:  URL: /hkljh Datos: 
+>>>>>>> 086edb9b633de599e1285a37b1a3f116b38405d7

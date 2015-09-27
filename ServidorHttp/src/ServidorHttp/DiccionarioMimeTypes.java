@@ -3,7 +3,7 @@ package ServidorHttp;
 import javax.activation.MimetypesFileTypeMap;
 
 /**
- * @author Caro
+ * @author Carolina y Kalam
  */
 public class DiccionarioMimeTypes {
     
@@ -27,6 +27,7 @@ public class DiccionarioMimeTypes {
         mapa.addMimeTypes("text/html html htm HTML");
     }
     
+    // Devuelve el Mime Type de un archivo segun su extension
     public String obtenerMimeType(String nombreArchivo) {
         return mapa.getContentType(nombreArchivo);
     }

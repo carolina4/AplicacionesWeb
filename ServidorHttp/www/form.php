@@ -1,4 +1,3 @@
-<?php $_POST = $_GET; ?>
 <!doctype html>
 <html>
 	<head>
@@ -6,7 +5,7 @@
 	</head>
 	<body>
 	
-		<h1>Bienvenido(a) <?php echo $_POST['user']; ?></h1>
+		<h1>Bienvenido(a) <?php echo $_POST['user'];?></h1>
 	
 	</body>
 </html>
