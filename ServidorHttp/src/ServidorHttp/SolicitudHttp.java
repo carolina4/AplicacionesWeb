@@ -123,7 +123,7 @@ public class SolicitudHttp {
                         break;
 
                     case "HEAD":
-                        out.write(headerHttp(200, "OK", mimeType, tamanoArchivo));
+                        HEAD(archivo, dout, mimeType);
                         break;
 
                     case "POST":
@@ -175,7 +175,12 @@ public class SolicitudHttp {
             dout.write(contenidoArchivo);
         }
     }
-	
+    
+    private void HEAD(File archivo, DataOutputStream dout, String mimeType) throws IOException{
+            String header = headerHttp(200, "OK", mimeType, (int)archivo.length());
+            dout.write(header.getBytes(Charset.forName("UTF-8")));
+    
+    }
     private void POST (File archivo, DataOutputStream dout, String mimeType, String datosPOST) throws FileNotFoundException, IOException, InterruptedException {        
         int dot = archivo.getName().lastIndexOf(".");
         
@@ -321,10 +326,12 @@ public class SolicitudHttp {
         
         // Se crea una instruccion php-cgi con sus parametros
         String [] variables = datos.split("&");  
+       
         String instruccion = "php-cgi -f " + archivo.getPath();
         for (int i = 0; i<variables.length; ++i) {
             instruccion += " ";
             instruccion += variables[i];
+            System.out.println(instruccion);
         }
         
         // Se ejecuta la instruccion php-cgi
@@ -344,6 +351,7 @@ public class SolicitudHttp {
         BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
         while((linea=input.readLine()) != null){
             resultado += linea;
+            System.out.println(resultado);
         }
 
         input.close();
