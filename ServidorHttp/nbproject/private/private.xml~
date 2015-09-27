@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-
+<<<<<<< HEAD
             <file>file:/home/kalam/Documentos/AppInternet/Servidor/ServidorHttp/src/ServidorHttp/ServidorHttp.java</file>
             <file>file:/home/kalam/Documentos/AppInternet/Servidor/ServidorHttp/src/ServidorHttp/Bitacora.java</file>
             <file>file:/home/kalam/Documentos/AppInternet/Servidor/ServidorHttp/src/ServidorHttp/SolicitudHttp.java</file>
             <file>file:/home/kalam/Documentos/AppInternet/Servidor/ServidorHttp/src/ServidorHttp/DiccionarioMimeTypes.java</file>
-
+=======
             <file>file:/C:/Users/Caro/Documents/AplicacionesWeb/ServidorHttp/src/ServidorHttp/SolicitudHttp.java</file>
-
+>>>>>>> d2069b188b435ae8c77a9d832b210a1d87e38950
+        </group>
     </open-files>
 </project-private>
