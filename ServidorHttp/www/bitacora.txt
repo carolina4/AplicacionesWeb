@@ -185,3 +185,24 @@ Metodo: GET Hora: 150926192209 Servidor: localhost:5217 Refiere: http://localhos
 Metodo: POST Hora: 150926192217 Servidor: localhost:5217 Refiere: http://localhost:5217/registro.html URL: /form.php Datos: user=carito&password=qwerty
 Metodo: GET Hora: 150926192259 Servidor: localhost:5217 Refiere:  URL: /hkljh Datos: 
 >>>>>>> 086edb9b633de599e1285a37b1a3f116b38405d7
+Metodo: GET Hora: 150926223112 Servidor: 192.168.2.146:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926223115 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926223122 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150926223126 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150926223129 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /registro.html Datos: 
+Metodo: GET Hora: 150926223139 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: POST Hora: 150926223148 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/registro.html URL: /form.php Datos: user=kalam&password=123
+Metodo: GET Hora: 150926223814 Servidor: 192.168.2.146:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150926223821 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150926223824 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150926223837 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/ URL: /registro.html Datos: 
+Metodo: GET Hora: 150926223841 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: POST Hora: 150926223848 Servidor: 192.168.2.146:5217 Refiere: http://192.168.2.146:5217/registro.html URL: /form.php Datos: user=kalam&password=123
+Metodo: GET Hora: 150926223856 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150926224424 Servidor: 192.168.2.146:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150927104408 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150927105632 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150927105739 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150927105801 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: HEAD Hora: 150927105833 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: POST Hora: 150927110008 Servidor: localhost:5217 Refiere:  URL: /form.php Datos: user=kalam
