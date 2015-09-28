@@ -1,0 +1,1 @@
+Metodo: GET Hora: 150927205818 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 
