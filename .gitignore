@@ -13,3 +13,6 @@ hs_err_pid*
 
 built-jar.properties
 /ServidorHttp/dist/
+/ServidorHttp/nbproject/private
+
+private.properties
