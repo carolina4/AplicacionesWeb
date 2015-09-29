@@ -1,1 +1,12 @@
 Metodo: GET Hora: 150927205818 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 
+Metodo: GET Hora: 150928211104 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150928211104 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150928211104 Servidor: localhost:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150928211335 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150928211335 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150928211342 Servidor: localhost:5217 Refiere:  URL: /asdfasdf Datos: 
+Metodo: GET Hora: 150928211346 Servidor: localhost:5217 Refiere:  URL: /asdfasdf Datos: 
+Metodo: GET Hora: 150928211346 Servidor: localhost:5217 Refiere:  URL: /favicon.ico Datos: 
+Metodo: GET Hora: 150928223309 Servidor: localhost:5217 Refiere:  URL: / Datos: 
+Metodo: GET Hora: 150928223309 Servidor: localhost:5217 Refiere: http://localhost:5217/ URL: /imagen.jpg Datos: 
+Metodo: GET Hora: 150928223336 Servidor: localhost:5217 Refiere:  URL: /inexistente.html Datos: 
